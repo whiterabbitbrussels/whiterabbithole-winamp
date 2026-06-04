@@ -130,6 +130,11 @@
     box-sizing: border-box;
   }
   .ai { font-size: 0.34em; vertical-align: baseline; letter-spacing:-0.005em; font-weight: 900; }
+  @keyframes pan-down {
+    0%   { object-position: center 0%; }
+    100% { object-position: center 100%; }
+  }
+  .video-pan-down { animation: pan-down 10s ease-in-out infinite alternate; object-fit:cover; width:100%; height:100%; display:block; }
 
   /* shared chrome */
   .slide-chrome {
@@ -775,7 +780,7 @@
         <span style="display:block; font-family:var(--font-display); font-weight:900; font-size:160px; letter-spacing:-0.04em; text-transform:uppercase; line-height:0.9; color:var(--wrh-cream);">Creativity &amp; Storytelling</span>
       </div>
       <div style="position:relative; border-radius:10px; overflow:hidden; height:460px; width:100%;">
-        <video src="assets/DPRTMNT_club_2.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+        <video src="assets/DPRTMNT_club_2.mp4" autoplay muted loop playsinline class="video-pan-down"></video>
         <div style="position:absolute; left:24px; bottom:24px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(244,220,198,0.9); background:rgba(10,8,7,0.55); backdrop-filter:blur(8px); padding:8px 14px; border-radius:6px;">DPRTMNT Club</div>
       </div>
     </div>
@@ -818,22 +823,22 @@
 
       <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; flex:0 0 auto;">
 
-        <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(244,220,198,0.25); padding:32px 36px; display:flex; flex-direction:column; gap:16px;">
+        <div style="background:#F7F2EC; border:1px solid rgba(16,10,7,0.10); padding:32px 36px; display:flex; flex-direction:column; gap:16px;">
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--wrh-orange);">01 — Once</div>
-          <div style="font-family:var(--font-editorial);font-size:36px;font-weight:300;color:#fff;line-height:1.1;">Creative Brain</div>
-          <p style="font-family:var(--font-body);font-size:15px;line-height:1.6;color:rgba(255,255,255,0.75);margin:0;">Brand DNA, visual style, tone of voice, cultural positioning. Defined once. The system stays coherent forever after.</p>
+          <div style="font-family:var(--font-editorial);font-size:36px;font-weight:300;color:#100A07;line-height:1.1;">Creative Brain</div>
+          <p style="font-family:var(--font-body);font-size:15px;line-height:1.6;color:#5B4F47;margin:0;">Brand DNA, visual style, tone of voice, cultural positioning. Defined once. The system stays coherent forever after.</p>
         </div>
 
-        <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(244,220,198,0.25); padding:32px 36px; display:flex; flex-direction:column; gap:16px;">
+        <div style="background:#F7F2EC; border:1px solid rgba(16,10,7,0.10); padding:32px 36px; display:flex; flex-direction:column; gap:16px;">
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--wrh-orange);">02 — Ongoing</div>
-          <div style="font-family:var(--font-editorial);font-size:36px;font-weight:300;color:#fff;line-height:1.1;">AI Production</div>
-          <p style="font-family:var(--font-body);font-size:15px;line-height:1.6;color:rgba(255,255,255,0.75);margin:0;">Hyper-realistic visuals, music clips, avatars, social assets — generated at speed, always on-brand, without starting from scratch.</p>
+          <div style="font-family:var(--font-editorial);font-size:36px;font-weight:300;color:#100A07;line-height:1.1;">AI Production</div>
+          <p style="font-family:var(--font-body);font-size:15px;line-height:1.6;color:#5B4F47;margin:0;">Hyper-realistic visuals, music clips, avatars, social assets — generated at speed, always on-brand, without starting from scratch.</p>
         </div>
 
-        <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(244,220,198,0.25); padding:32px 36px; display:flex; flex-direction:column; gap:16px;">
+        <div style="background:#F7F2EC; border:1px solid rgba(16,10,7,0.10); padding:32px 36px; display:flex; flex-direction:column; gap:16px;">
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--wrh-orange);">03 — Automated</div>
-          <div style="font-family:var(--font-editorial);font-size:36px;font-weight:300;color:#fff;line-height:1.1;">Delivery</div>
-          <p style="font-family:var(--font-body);font-size:15px;line-height:1.6;color:rgba(255,255,255,0.75);margin:0;">Every format, every channel. TikTok, Reels, YouTube, OOH — adapted and published automatically.</p>
+          <div style="font-family:var(--font-editorial);font-size:36px;font-weight:300;color:#100A07;line-height:1.1;">Delivery</div>
+          <p style="font-family:var(--font-body);font-size:15px;line-height:1.6;color:#5B4F47;margin:0;">Every format, every channel. TikTok, Reels, YouTube, OOH — adapted and published automatically.</p>
         </div>
 
       </div>
@@ -866,7 +871,7 @@
           <div class="tag">48h delivery</div>
         </div>
       </div>
-      <div style="aspect-ratio:4/5; height:780px; border-radius:10px; overflow:hidden; box-shadow:0 40px 80px rgba(16,10,7,0.25); position:relative; flex-shrink:0;">
+      <div style="aspect-ratio:4/5; height:920px; border-radius:10px; overflow:hidden; box-shadow:0 40px 80px rgba(16,10,7,0.25); position:relative; flex-shrink:0;">
         <video src="assets/Ultra_Lounge-Bar-Restaurant.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
         <div class="tag" style="position:absolute;left:18px;top:18px;">ULTRA Lounge Bar &amp; Restaurant</div>
       </div>
