@@ -113,15 +113,16 @@
 <style>
   :root {
     --slide-pad: 96px;
-    --shoe-claret: #2C1810;
-    --shoe-cream:  #F2E8DC;
-    --shoe-paper:  #F6F0E8;
+    --wrh-orange: #E6530B;
+    --wrh-cream:  #F4DCC6;
+    --wrh-paper:  #F7F2EC;
+    --wrh-ink:    #100A07;
   }
   html, body { margin:0; background:#0a0807; }
   deck-stage { background:#0a0807; }
   section {
     width: 1920px; height: 1080px;
-    background: var(--shoe-paper);
+    background: var(--wrh-paper);
     color: var(--wrh-ink);
     position: relative;
     overflow: hidden;
@@ -158,8 +159,8 @@
   .overline.on-dark { color:var(--wrh-orange); }
 
   section.dark   { background:#0a0807; color:var(--wrh-fur-soft); }
-  section.claret { background:var(--shoe-claret); color:var(--shoe-cream); }
-  section.cream  { background:var(--shoe-paper); }
+  section.claret { background:var(--wrh-orange); color:var(--wrh-cream); }
+  section.cream  { background:var(--wrh-paper); }
 
   /* === 01 COVER === */
   .cover-grid { position:absolute; inset:0; display:grid; grid-template-columns: 1.05fr 1fr; }
@@ -228,7 +229,7 @@
   }
   .section-header .word .two {
     display:block; font-family: var(--font-display); font-weight:900;
-    font-size: 280px; letter-spacing:-0.04em; text-transform:uppercase; line-height:0.9;
+    font-size: 200px; letter-spacing:-0.04em; text-transform:uppercase; line-height:0.9;
   }
   .section-header .word .three {
     display:block; font-family: var(--font-editorial); font-weight:300; font-style: italic;
@@ -239,7 +240,7 @@
 
   /* === CONCEPT === */
   .concept-grid { position:absolute; inset:0; display:grid; grid-template-columns: 1fr 1fr; }
-  .concept-left  { background:var(--shoe-paper); padding: 140px var(--slide-pad); display:flex; flex-direction:column; justify-content:center; gap:36px; }
+  .concept-left  { background:var(--wrh-paper); padding: 140px var(--slide-pad); display:flex; flex-direction:column; justify-content:center; gap:36px; }
   .concept-right {
     background-image:url('assets/shoe/concept-hero.jpg');
     background-size:cover; background-position:center;
@@ -565,7 +566,7 @@
     position: relative; overflow: hidden;
     box-shadow: 0 30px 70px -20px rgba(16,10,7,0.28);
   }
-  .team-card.claret { background: var(--shoe-claret); color: var(--shoe-cream); }
+  .team-card.claret { background: var(--wrh-orange); color: var(--wrh-cream); }
   .team-card.ink    { background: var(--wrh-ink); color: var(--wrh-fur-soft); }
   .team-card::after {
     content:""; position:absolute; right:-100px; bottom:-100px;
@@ -693,23 +694,16 @@
 <body>
 <script type="application/json" id="speaker-notes">
 [
-  "Apertura. The Art of Style in Motion. La stessa intelligenza creativa che applichiamo alla moda, adattata al mondo delle scarpe.",
-  "La realtà del mercato. Tre problemi che ogni shoe brand conosce bene: costi di produzione proibitivi, zero flessibilità creativa dopo lo shooting, incoerenza visiva tra stagioni e canali.",
-  "Capitolo I. Cinematic Style AI. Come trasformiamo un singolo prodotto in una campagna completa.",
-  "Il concetto. Da una sola foto di scarpa, generiamo un ecosistema di contenuti: catalogo, lifestyle, campagna, social. La scarpa è il punto di partenza, non il risultato finale.",
-  "La direzione creativa guida la tecnologia. Non siamo solo tecnici AI: siamo art director, brand thinker, visual storyteller. L'AI è il nostro strumento di produzione ad alta velocità.",
-  "Il punto di partenza. Tutto inizia da una singola foto di prodotto. Anche un semplice packshot su sfondo bianco. Quello che viene dopo è il lavoro nostro.",
-  "Oltre il catalogo. Dallo stesso source: viste a 360° per l'e-commerce e video cinématici per i social. Senza shooting aggiuntivi.",
-  "La scarpa nel mondo. Piazziamo le scarpe in ambienti ricchi e atmosferici — strade, parchi, interni, stagioni — con una direzione artistica coerente. La scarpa diventa protagonista di una storia.",
-  "Adattabilità infinita. Stesso modello, ogni colore, ogni stagione, ogni mercato. Pronto per Shopify, WooCommerce e shop custom.",
-  "Capitolo II. Il cervello creativo. Come funziona il sistema.",
-  "Costruiamo il cervello creativo per la collezione. Una volta configurato, il sistema produce all'infinito senza perdere coerenza: brand DNA, stile fotografico, ambienti, mood — tutto codificato.",
-  "Asset creation flow. Setup unico per stagione: il sistema AI codifica brand e stile. Da lì: asset di catalogo in velocità di pubblicazione, e campagna sugli stessi ambienti e mood.",
-  "Look 1 — Catalogo. Quattro viste di prodotto dallo stesso sistema: frontale, laterale, dettaglio suola, dettaglio tomaia. Tutto generato, pronto per e-commerce.",
-  "Look 1 — Campagna. La stessa scarpa in contesti lifestyle ricchi. Location invernale, location urbana, location naturale. Coerenza assoluta tra catalogo e campagna.",
-  "Velocità senza compromesso. Tre pilastri: consegna rapida, scalabilità accessibile, identità coerente.",
-  "Chi c'è dietro. Peter Client Director, Alberto Maccari Creative Director. Venticinque anni di campagne internazionali.",
-  "Chiusura. Where creative thinking meets high-speed production."
+  "Apertura. The Sound of Culture. Creiamo atmosfere visive che amplificano la musica e connettono artisti con pubblico.",
+  "Come creiamo per la musica. Tre modalità: event moments catturando l'energia live, artist storytelling per connessione profonda, social amplification ottimizzato per ogni piattaforma.",
+  "Capitolo I. Creator Empowerment. Come supportiamo gli artisti indipendenti.",
+  "Il concetto. Winamp come piattaforma unificata per artisti indipendenti. Non un'altra app, ma una vera alternativa che restituisce controllo e ricavi agli artisti.",
+  "La direzione creativa della campagna. Non siamo solo tecnici: siamo art director, storyteller, visual strategist. La campagna unisce artisti, costruisce momentum culturale, provoca azione.",
+  "Da evento a broadcast. Uno shoot, infiniti formati. Catturiamo momento live, trasformiamo in contenuto pronto per TikTok, Instagram, YouTube — tutto in 48 ore.",
+  "Contenuto verticale ad alta performance. Creato per viral. Trending audio, caption native, taglio dinamico. Ogni video è ottimizzato per algoritmi della piattaforma.",
+  "Cosa ottieni dalla produzione White Rabbit. Velocità: shoot a consegna in 48h. Coerenza: un'unica direzione visiva per tutte le piattaforme. Impatto: contenuto designato per culturale viralità.",
+  "Chi c'è dietro. 25 anni di campagne internazionali con i brand più esigenti. Ora focalizzati su creatori e cultura.",
+  "Chiusura. Where culture meets creation."
 ]
 </script>
 
@@ -720,14 +714,16 @@
     <div class="cover-grid">
       <div class="cover-left">
         <div class="by">
-          <img src="assets/wrh-app-icon.png" alt="WRH" />
+          <div style="width:40px;height:40px;background:#5520bb;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:#f4dcb6;font-weight:bold;font-size:18px;">WRH</span>
+          </div>
           A White Rabbit Hole<span class="ai" style="font-size:0.9em;">.ai</span> proposition
         </div>
-        <h1>The Art of<br/>Style in <i>Motion.</i></h1>
-        <p class="sub">AI creativity for lifestyle brands — from a single product photo to a full campaign ecosystem.</p>
+        <h1>The Sound of<br/><i>Culture.</i></h1>
+        <p class="sub">Visual storytelling for music and culture — creating atmospheres that amplify artists and brands.</p>
         <div class="meta">
           <div>Studio<b>White Rabbit Hole<span class="ai">.ai</span></b></div>
-          <div>For<b>Lifestyle brands · Retail · D2C</b></div>
+          <div>For<b>Music · Culture · Events</b></div>
           <div>Date<b>2026</b></div>
         </div>
       </div>
@@ -737,35 +733,35 @@
     </div>
   </section>
 
-  <!-- 02 — PAIN -->
-  <section data-screen-label="02 The reality">
+  <!-- 02 — HOW WE CREATE CONTENT FOR MUSIC -->
+  <section data-screen-label="02 Visual storytelling">
     <div class="slide-chrome">
       <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
-      <div>02 · The reality</div>
+      <div>02 · Visual storytelling</div>
     </div>
     <div class="pillars-slide">
-      <h2>The reality for<br/>independent <em>music creators.</em></h2>
+      <h2>How we create visual<br/>atmospheres for <em>music.</em></h2>
       <div class="pillars-row">
         <div class="pillar-card">
           <div class="mark bar"></div>
-          <h4>Platform fragmentation</h4>
-          <p>Your music lives on Spotify, Apple Music, TikTok, YouTube, SoundCloud. No single place to build your audience or control your narrative. Revenue scattered across 5+ dashboards.</p>
+          <h4>Event moments</h4>
+          <p>We capture the energy of live experiences — DJ sets, concerts, festivals, club nights. Cinematic visuals that amplify the music and create shareable moments for social media.</p>
         </div>
         <div class="pillar-card">
           <div class="mark dot"></div>
-          <h4>Monetization complexity</h4>
-          <p>Streaming royalties don't pay the bills. You're juggling Patreon, Discord, merch, fan DMs. No unified system. You're losing money to the middleman every step.</p>
+          <h4>Artist storytelling</h4>
+          <p>From studio sessions to behind-the-scenes, we craft visual narratives that connect fans to the artist. One unified aesthetic across all touchpoints — TikTok, Instagram, YouTube.</p>
         </div>
         <div class="pillar-card">
           <div class="mark sq"></div>
-          <h4>Audience ownership</h4>
-          <p>Your fans are on platforms you don't control. Algorithm changes = audience disappears overnight. You have zero direct relationship with your listeners.</p>
+          <h4>Social amplification</h4>
+          <p>We design visuals optimized for every platform: vertical for TikTok, landscape for YouTube, square for Instagram. Same mood, infinite formats. Ready to post and proven to engage.</p>
         </div>
       </div>
     </div>
     <div class="slide-footer">
-      <div>White Rabbit Hole.ai · The Evolution of Sound</div>
-      <div>02 / 17</div>
+      <div>White Rabbit Hole.ai · The Sound of Culture</div>
+      <div>02 / 11</div>
     </div>
   </section>
 
@@ -806,13 +802,14 @@
           <div class="tag">Audience Ownership</div>
         </div>
       </div>
-      <div class="concept-right">
+      <div class="concept-right" style="position:relative;">
         <video src="assets/Skybar_beirut.mp4" autoplay muted loop playsinline></video>
+        <div class="tag" style="position:absolute;left:18px;top:18px;">Skybar Beirut</div>
       </div>
     </div>
     <div class="slide-footer">
-      <div>White Rabbit Hole.ai · The Evolution of Sound</div>
-      <div>04 / 17</div>
+      <div>White Rabbit Hole.ai · The Sound of Culture</div>
+      <div>04 / 11</div>
     </div>
   </section>
 
@@ -823,8 +820,9 @@
       <div>05 · Creative direction</div>
     </div>
     <div class="creative-dir">
-      <div class="hero">
+      <div class="hero" style="position:relative;">
         <video src="assets/Ultra_Lounge-Bar-Restaurant.mp4" autoplay muted loop playsinline></video>
+        <div class="tag" style="position:absolute;left:18px;top:18px;">Ultra Lounge</div>
       </div>
       <div class="copy">
         <div>
@@ -835,35 +833,12 @@
       </div>
     </div>
     <div class="slide-footer">
-      <div>White Rabbit Hole.ai · The Evolution of Sound</div>
-      <div>05 / 17</div>
+      <div>White Rabbit Hole.ai · The Sound of Culture</div>
+      <div>05 / 11</div>
     </div>
   </section>
 
-  <!-- 06 — STARTING POINT -->
-  <section data-screen-label="06 Starting point">
-    <div class="slide-chrome">
-      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
-      <div>06 · Starting point</div>
-    </div>
-    <div class="startpoint">
-      <div class="copy">
-        <div class="overline" style="margin-bottom:18px;">The opportunity</div>
-        <h2>Independent artists<br/>deserve a platform<br/><i>that works for them.</i></h2>
-        <p>Right now, the best music creators are scattered. Spotify takes 70%. YouTube's algorithm is a mystery. TikTok owns your audience. Winamp changes this: one unified home where artists own their data, control their reach, and keep the majority of revenue.</p>
-      </div>
-      <div class="frame" style="background:#f0ece6;">
-        <div class="tag">The artist · At the center</div>
-        <img src="assets/wrh-app-icon.png" alt="Winamp for Creators" style="width:100%;height:100%;object-fit:contain;display:block;" />
-      </div>
-    </div>
-    <div class="slide-footer">
-      <div>White Rabbit Hole.ai · The Evolution of Sound</div>
-      <div>06 / 17</div>
-    </div>
-  </section>
-
-  <!-- 07 — BEYOND STILLS -->
+<!-- 07 — BEYOND STILLS -->
   <section data-screen-label="07 Beyond stills">
     <div class="slide-chrome">
       <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
@@ -871,29 +846,30 @@
     </div>
     <div class="beyond">
       <div class="head">
-        <h2>Creator-first<br/><em>monetization tools.</em></h2>
-        <p>Winamp gives artists what they've been missing: built-in monetization, direct fan connection, and revenue transparency. No algorithmic gatekeeping. No hidden fees. Just creators and fans, directly connected.</p>
+        <h2>From event to<br/><em>broadcast.</em></h2>
+        <p>We capture live moments and transform them into platform-ready content. One shoot, infinite formats — cinema-quality footage optimized for TikTok, Instagram, YouTube, and beyond.</p>
       </div>
       <div class="grid" style="grid-template-columns: 1fr;">
         <div class="card" style="flex-direction:row; aspect-ratio:16/6;">
-          <div class="pic" style="flex:1; aspect-ratio:auto;">
+          <div class="pic" style="flex:1; aspect-ratio:auto; position:relative;">
             <video src="assets/MrVander_Club.mp4" autoplay muted loop playsinline></video>
+            <div class="tag" style="position:absolute;left:18px;top:18px;">MrVander Club</div>
           </div>
           <div class="body" style="flex:0 0 460px; justify-content:center;">
-            <div class="lab">Creator empowerment</div>
-            <h4>Unified revenue streams.</h4>
-            <p>Streaming + direct sales + memberships + fan support — all in one dashboard. Artists see exactly where revenue comes from, keep 85%+, and build sustainable careers without chasing virality.</p>
+            <div class="lab">Visual Storytelling</div>
+            <h4>Live to post.</h4>
+            <p>We don't just shoot events. We create content. Multi-camera coverage, color grading, motion graphics, all delivered ready to post. Artists get professional broadcast-quality footage within 48 hours.</p>
           </div>
         </div>
       </div>
     </div>
     <div class="slide-footer">
-      <div>White Rabbit Hole.ai · The Evolution of Sound</div>
-      <div>07 / 11</div>
+      <div>White Rabbit Hole.ai · The Sound of Culture</div>
+      <div>06 / 11</div>
     </div>
   </section>
 
-  <!-- 08 — SOCIAL AUTOMATION -->
+  <!-- 08 — VERTICAL VIDEO SHOWCASE -->
   <section data-screen-label="08 Social &amp; Automation">
     <div class="slide-chrome">
       <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
@@ -901,23 +877,24 @@
     </div>
     <div class="concept-grid">
       <div class="concept-left">
-        <div class="overline">White Rabbit's role</div>
-        <h2>Make Winamp<br/>unavoidable.<br/><i>Everywhere.</i></h2>
-        <p class="lead">We amplify Winamp's message across every touchpoint: creator stories on TikTok, artist spotlights on Instagram, podcasts, events, partnerships. We build cultural momentum and position Winamp as the platform creators aspire to be on — not escape from.</p>
+        <div class="overline">Social-first production</div>
+        <h2>Built for TikTok,<br/>Instagram, YouTube<br/><i>Shorts.</i></h2>
+        <p class="lead">We produce vertical content that performs. Short-form videos optimized for platform algorithms. Trending sounds, native captions, dynamic cuts — everything designed to stop the scroll and drive engagement.</p>
         <div class="tag-row">
-          <div class="tag">Creator Stories</div>
-          <div class="tag">Social Campaigns</div>
-          <div class="tag">Partnerships</div>
-          <div class="tag">Events · Sponsorships</div>
+          <div class="tag">Vertical Formats</div>
+          <div class="tag">Trending Audio</div>
+          <div class="tag">Native Captions</div>
+          <div class="tag">High Engagement</div>
         </div>
       </div>
-      <div class="concept-right">
+      <div class="concept-right" style="position:relative;">
         <video src="assets/Skybar_beirut2.mp4" autoplay muted loop playsinline></video>
+        <div class="tag" style="position:absolute;left:18px;top:18px;">Skybar Beirut</div>
       </div>
     </div>
     <div class="slide-footer">
-      <div>White Rabbit Hole.ai · The Evolution of Sound</div>
-      <div>08 / 11</div>
+      <div>White Rabbit Hole.ai · The Sound of Culture</div>
+      <div>07 / 11</div>
     </div>
   </section>
 
@@ -928,28 +905,28 @@
       <div>09 · The result</div>
     </div>
     <div class="pillars-slide">
-      <h2>What Winamp wins<br/>with White Rabbit<br/><em>on board.</em></h2>
+      <h2>What you get from<br/>White Rabbit<br/><em>production.</em></h2>
       <div class="pillars-row">
         <div class="pillar-card">
           <div class="mark bar"></div>
-          <h4>Creator acquisition</h4>
-          <p>Reach independent artists across all platforms. Turn creators into brand ambassadors. Build momentum from day 1 with authentic creator stories, not corporate messaging.</p>
+          <h4>Speed to market</h4>
+          <p>Shoot one day, post within 48 hours. No weeks of post-production. Content ready across all platforms — TikTok, Instagram, YouTube. Trending audio cuts included.</p>
         </div>
         <div class="pillar-card">
           <div class="mark dot"></div>
-          <h4>Market positioning</h4>
-          <p>Position Winamp as the mission-driven alternative to Spotify, YouTube, TikTok. Not "another music app" — the platform that actually pays artists fairly and gives them control.</p>
+          <h4>Unified aesthetic</h4>
+          <p>Every video, every angle, every platform speaks the same visual language. Brand consistency that builds recognition. One art direction, infinite formats.</p>
         </div>
         <div class="pillar-card">
           <div class="mark sq"></div>
-          <h4>Global momentum</h4>
-          <p>Build unstoppable cultural narrative. From grassroots creator love to mainstream recognition. The platform creators choose, not the one they tolerate.</p>
+          <h4>Cultural impact</h4>
+          <p>Content designed to viral. Native to platform algorithms. Proven engagement rates. Your story, told at broadcast quality, amplified across social.</p>
         </div>
       </div>
     </div>
     <div class="slide-footer">
-      <div>White Rabbit Hole.ai · The Evolution of Sound</div>
-      <div>09 / 11</div>
+      <div>White Rabbit Hole.ai · The Sound of Culture</div>
+      <div>08 / 11</div>
     </div>
   </section>
 
@@ -961,29 +938,29 @@
     </div>
     <div class="bio">
       <div class="bio-heading">
-        <h2>25 years of<br/><em>experience.</em> One craft.</h2>
-        <p>Editorial taste applied to mass market brands. Campaigns that look like magazines and sell like retail. Now applied to lifestyle brands.</p>
+        <h2>Editorial craft at<br/><em>broadcast scale.</em></h2>
+        <p>25 years of campaigns for the world's most demanding brands. Now focused on creators, artists, and culture.</p>
       </div>
       <div class="team-row">
-        <div class="team-card claret">
-          <div class="role">Client manager</div>
-          <h3 class="name">Peter</h3>
-          <p class="copy">Client lead. Single point of contact from brief to delivery. Keeps every project on rails: scope, milestones, suppliers, files. Weekly check-ins until the last asset is signed off.</p>
-          <div class="phone">+32 02 646 31 90</div>
-        </div>
         <div class="team-card ink">
-          <div class="role">Strategy &amp; creative director</div>
+          <div class="role">Founder &amp; creative director</div>
           <h3 class="name">Alberto<br/>Maccari</h3>
-          <p class="copy">Italian art director and photographer, based in Bruxelles. From TBWA, Havas and JWT in Milano, London and Düsseldorf, to head of creation at Isobar Dentsu, to founder of White Rabbit. Editorial craft applied at commercial scale.</p>
+          <p class="copy">Italian art director and photographer. From TBWA, Havas, JWT across Milano, London, and Düsseldorf, to head of creation at Isobar Dentsu. Awarded campaigns for Peugeot, Triumph, M&amp;S, Bazaar. Now applying editorial craft to cultural storytelling.</p>
           <div class="phone">+32 (0)470 841 722</div>
           <a class="linkedin" href="https://www.linkedin.com/in/albertomaccari/" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V9h3v10zM6.5 7.7A1.7 1.7 0 116.5 4a1.7 1.7 0 010 3.7zM19 19h-3v-5.3c0-1.4-.5-2.3-1.7-2.3-1 0-1.5.7-1.8 1.3-.1.2-.1.5-.1.8V19h-3V9h3v1.3c.4-.6 1.2-1.5 2.8-1.5 2 0 3.8 1.3 3.8 4.2V19z"/></svg>
             linkedin.com/in/albertomaccari
           </a>
         </div>
+        <div class="team-card claret">
+          <div class="role">Production &amp; delivery</div>
+          <h3 class="name">White Rabbit<br/>Brussels</h3>
+          <p class="copy">Dedicated production team: cinematographers, editors, color graders, motion designers. We shoot events, produce broadcast-quality content, and deliver across all platforms within 48 hours. Quality built into every project.</p>
+          <div class="phone">+32 02 646 31 90</div>
+        </div>
       </div>
       <div class="clients">
-        <div class="clients-label">Selected clients · 25 years</div>
+        <div class="clients-label">Trusted by major brands · 2001–2026</div>
         <div class="clients-grid">
           <div class="client-logo"><div class="lg-abinbev">ANHEUSER-BUSCH<b>InBev</b></div></div>
           <div class="client-logo"><div class="lg-havas">Havas</div></div>
@@ -996,8 +973,8 @@
       </div>
     </div>
     <div class="slide-footer">
-      <div>White Rabbit Hole.ai · The Evolution of Sound</div>
-      <div>10 / 11</div>
+      <div>White Rabbit Hole.ai · The Sound of Culture</div>
+      <div>09 / 11</div>
     </div>
   </section>
 
@@ -1009,30 +986,27 @@
     </div>
     <div class="closing">
       <div class="closing-headline">
-        <h2>Where craft<br/>meets <em>high speed.</em></h2>
+        <h2>Where culture<br/>meets <em>creation.</em></h2>
       </div>
-      <!-- Arrow: absolute, above Studio column, 440px -->
-      <img src="assets/wrh-arrow-down.gif" alt=""
-           style="position:absolute; right:120px; bottom:230px; width:440px; height:440px; display:block; pointer-events:none;" />
       <div class="contact-row">
         <div class="contact">
-          <span class="label">Client manager</span>
-          <b>Peter</b>
-          <div class="role">Single point of contact</div>
-          +32 02 646 31 90
-        </div>
-        <div class="contact">
-          <span class="label">Strategy &amp; creative director</span>
+          <span class="label">Creative director</span>
           <b>Alberto Maccari</b>
-          <div class="role">Creative direction</div>
+          <div class="role">Strategy &amp; creative direction</div>
           +32 (0)470 841 722
         </div>
         <div class="contact">
           <span class="label">Studio</span>
           <b>White Rabbit Hole<span style="font-size:0.62em;vertical-align:baseline;font-weight:700;">.ai</span></b>
-          <div class="role">Bruxelles</div>
+          <div class="role">Brussels · Belgium</div>
           <a href="https://whiterabbithole.ai">whiterabbithole.ai</a><br/>
           <a href="mailto:hello@whiterabbithole.ai">hello@whiterabbithole.ai</a>
+        </div>
+        <div class="contact">
+          <span class="label">Production</span>
+          <b>Let's talk.</b>
+          <div class="role">Event coverage · Social content · Artist storytelling</div>
+          <a href="tel:+3202646319">+32 02 646 31 90</a>
         </div>
       </div>
     </div>
