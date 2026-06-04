@@ -1,0 +1,249 @@
+/* =========================================================
+   White Rabbit Hole AI — Design Tokens
+   Color, typography, spacing, shadow, motion.
+   ========================================================= */
+
+/* -------- Fonts -------------------------------------------
+   Brand voice: MONTSERRAT (Light → Black + italics).
+   Self-hosted from /fonts. Montserrat covers both display
+   (Black 900 for the brand wordmark) and body (Regular 400 /
+   Medium 500). Editorial mood pieces still use Cormorant
+   Garamond (Google Fonts) for the campaign-mood serif.
+   Mono → JetBrains Mono (used sparingly — automation, code).
+----------------------------------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-Light.ttf") format("truetype");
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-Regular.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-Medium.ttf") format("truetype");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-MediumItalic.ttf") format("truetype");
+  font-weight: 500; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-SemiBold.ttf") format("truetype");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-Bold.ttf") format("truetype"),
+       url("fonts/Montserrat-Bold.otf") format("opentype");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-Black.ttf") format("truetype");
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("fonts/Montserrat-BlackItalic.ttf") format("truetype");
+  font-weight: 900; font-style: italic; font-display: swap;
+}
+
+:root {
+  /* ============== CORE PALETTE — WRH BRAND ============== */
+  /* The brand owns one signal color: a hot, almost neon orange.
+     Everything else is paper, ink, and warm neutrals. */
+  --wrh-orange:        #E6530B;   /* OFFICIAL primary signal */
+  --wrh-orange-deep:   #B83D04;   /* press / hover-down */
+  --wrh-orange-soft:   #F58A4C;   /* tints, gradients */
+  --wrh-amber:         #F6BB24;   /* yellow-orange complementary */
+  --wrh-ember:         #7A2A0A;   /* deep shadow side of orange */
+
+  /* Rabbit-fur creams — the "ear" tones. Used on dark or orange
+     backgrounds; gives the brand its tactile, warm feel. */
+  --wrh-fur:           #F4DCC6;   /* primary cream */
+  --wrh-fur-soft:      #FBEFE0;   /* near-white cream */
+  --wrh-fur-deep:      #D9B89A;   /* shadow side of cream */
+
+  /* Ink + paper */
+  --wrh-nero:          #000000;   /* true black — "nero" */
+  --wrh-ink:           #100A07;   /* near-black, slightly warm */
+  --wrh-ink-soft:      #2A211C;
+  --wrh-graphite:      #5B4F47;
+  --wrh-stone:         #9A8E84;
+  --wrh-grigio:        #D9D9D9;   /* light grey complementary */
+  --wrh-grigio-soft:   #ECECEC;
+  --wrh-paper:         #F7F2EC;   /* warm off-white */
+  --wrh-paper-pure:    #FFFCF7;   /* lighter paper */
+  --wrh-white:         #FFFFFF;
+
+  /* ============== SEMANTIC FOREGROUND / BG ============== */
+  --bg:                var(--wrh-paper);
+  --bg-elevated:       var(--wrh-paper-pure);
+  --bg-inverse:        var(--wrh-ink);
+  --bg-brand:          var(--wrh-orange);
+
+  --fg:                var(--wrh-ink);
+  --fg-muted:          var(--wrh-graphite);
+  --fg-subtle:         var(--wrh-stone);
+  --fg-inverse:        var(--wrh-fur-soft);
+  --fg-brand:          var(--wrh-orange);
+
+  --border:            rgba(16, 10, 7, 0.10);
+  --border-strong:     rgba(16, 10, 7, 0.20);
+  --border-inverse:    rgba(244, 220, 198, 0.18);
+
+  /* ============== CAMPAIGN ACCENTS ==================== *
+   * Five-tone seasonal range. Use as full-bleed campaign
+   * backgrounds, type plates, and editorial covers — never UI. */
+  --campaign-arancio:     #E6530B;   /* arancio — signal orange */
+  --campaign-arancio-ink: #FBEFE0;
+  --campaign-giallo:      #F6BB24;   /* giallo — amber yellow  */
+  --campaign-giallo-ink:  #2A211C;
+  --campaign-grigio:      #BFBAB3;   /* grigio — warm stone    */
+  --campaign-grigio-ink:  #100A07;
+  --campaign-crema:       #F4DCC6;   /* crema — rabbit-fur     */
+  --campaign-crema-ink:   #2A211C;
+  --campaign-nero:        #000000;   /* nero — true black      */
+  --campaign-nero-ink:    #F4DCC6;
+
+  /* ============== TYPE FAMILIES ====================== */
+  --font-display:      "Montserrat", "Helvetica Neue", system-ui, sans-serif;
+  --font-editorial:    "Cormorant Garamond", "Didot", "Bodoni 72", Georgia, serif;
+  --font-body:         "Montserrat", -apple-system, "Segoe UI", sans-serif;
+  --font-mono:         "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ============== TYPE SCALE ========================= */
+  /* The display scale is intentionally OVERSIZED — fashion */
+  --t-display-xxl:     clamp(72px, 12vw, 220px);
+  --t-display-xl:      clamp(56px, 8vw, 140px);
+  --t-display-l:       clamp(40px, 5vw, 88px);
+  --t-display-m:       clamp(32px, 3.6vw, 56px);
+
+  --t-editorial-xl:    clamp(56px, 8vw, 160px); /* "MAI", "OCT" mood */
+  --t-editorial-l:     clamp(36px, 4.6vw, 80px);
+  --t-editorial-m:     28px;
+
+  --t-h1:              48px;
+  --t-h2:              32px;
+  --t-h3:              22px;
+  --t-h4:              17px;
+  --t-body:            16px;
+  --t-body-sm:         14px;
+  --t-caption:         12px;
+  --t-overline:        11px;
+
+  /* ============== SPACING (4-pt) ====================== */
+  --sp-0:   0;
+  --sp-1:   4px;
+  --sp-2:   8px;
+  --sp-3:   12px;
+  --sp-4:   16px;
+  --sp-5:   24px;
+  --sp-6:   32px;
+  --sp-7:   48px;
+  --sp-8:   64px;
+  --sp-9:   96px;
+  --sp-10:  128px;
+
+  /* ============== RADII ============================== */
+  /* The brand has very few rounded corners — the rabbit hole
+     is the only fully circular form. UI radii are gentle. */
+  --r-0:   0;
+  --r-1:   0;
+  --r-2:   0;
+  --r-3:   0;
+  --r-4:   0;
+  --r-pill: 999px;
+  --r-circle: 50%;
+
+  /* ============== SHADOWS / ELEVATION ================ */
+  --shadow-1: 0 1px 2px rgba(16,10,7,0.04), 0 1px 3px rgba(16,10,7,0.06);
+  --shadow-2: 0 4px 12px rgba(16,10,7,0.06), 0 2px 4px rgba(16,10,7,0.04);
+  --shadow-3: 0 16px 40px rgba(16,10,7,0.10), 0 4px 12px rgba(16,10,7,0.06);
+  --shadow-cinematic: 0 60px 120px -30px rgba(122,42,10,0.45), 0 12px 36px rgba(16,10,7,0.18);
+
+  /* ============== MOTION ============================= */
+  --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);    /* fashion-house glide */
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-cinema:  cubic-bezier(0.16, 1, 0.3, 1);     /* long luxury exit */
+  --t-fast:   140ms;
+  --t-base:   240ms;
+  --t-slow:   480ms;
+  --t-curtain: 900ms;
+
+  /* ============== GRID / LAYOUT ====================== */
+  --grid-gutter: 24px;
+  --grid-margin: 64px;
+  --maxw-prose:  68ch;
+  --maxw-page:   1320px;
+}
+
+/* ============== SEMANTIC TYPOGRAPHY ==================== */
+
+html { color: var(--fg); background: var(--bg); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+
+.wrh-display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+.wrh-display--xxl { font-size: var(--t-display-xxl); }
+.wrh-display--xl  { font-size: var(--t-display-xl); }
+.wrh-display--l   { font-size: var(--t-display-l); }
+.wrh-display--m   { font-size: var(--t-display-m); }
+
+.wrh-editorial {
+  font-family: var(--font-editorial);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.0;
+}
+.wrh-editorial--xl { font-size: var(--t-editorial-xl); font-weight: 300; }
+.wrh-editorial--l  { font-size: var(--t-editorial-l); }
+.wrh-editorial--m  { font-size: var(--t-editorial-m); font-style: italic; }
+
+h1, .wrh-h1 { font-family: var(--font-display); font-weight: 800; font-size: var(--t-h1); line-height: 1.04; letter-spacing: -0.02em; text-transform: uppercase; }
+h2, .wrh-h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--t-h2); line-height: 1.08; letter-spacing: -0.015em; text-transform: uppercase; }
+h3, .wrh-h3 { font-family: var(--font-body); font-weight: 700; font-size: var(--t-h3); line-height: 1.2; letter-spacing: -0.005em; }
+h4, .wrh-h4 { font-family: var(--font-body); font-weight: 600; font-size: var(--t-h4); line-height: 1.3; }
+
+p, .wrh-body { font-family: var(--font-body); font-weight: 400; font-size: var(--t-body); line-height: 1.55; color: var(--fg); text-wrap: pretty; }
+.wrh-body-sm { font-size: var(--t-body-sm); line-height: 1.5; }
+.wrh-lead    { font-family: var(--font-body); font-weight: 300; font-size: 20px; line-height: 1.45; color: var(--fg); text-wrap: pretty; }
+
+.wrh-overline {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--t-overline);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.wrh-caption {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--t-caption);
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+}
+
+code, .wrh-mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: -0.01em;
+}
+
+/* utility: brand color text */
+.wrh-fg-brand { color: var(--wrh-orange); }
+.wrh-fg-fur   { color: var(--wrh-fur); }
+.wrh-fg-paper { color: var(--wrh-paper); }

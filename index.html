@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>White Rabbit Hole.ai — The Evolution of Sound</title>
+<link rel="icon" type="image/png" href="assets/wrh-app-icon.png" />
+<link rel="apple-touch-icon" href="assets/wrh-app-icon.png" />
+<link rel="stylesheet" href="colors_and_type.css" />
+
+<!-- ============ TRACKING ============ -->
+<!-- 1. Vercel Web Analytics (auto when enabled in dashboard) -->
+<script defer src="/_vercel/insights/script.js"></script>
+
+<!-- 2. Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "x1otzmjjed");
+</script>
+
+<!-- 3. Custom slide & CTA tracking -->
+<script>
+  (function(){
+    var params = new URLSearchParams(window.location.search);
+    var pathClient = (window.location.pathname || '').replace(/^\/+|\/+$/g, '').split('/')[0];
+    var visitor = pathClient || params.get('u') || params.get('utm_recipient') || 'anonymous';
+    var source  = params.get('utm_source') || params.get('s') || '';
+    var openedAt = Date.now();
+    var currentSlide = null, slideStartedAt = openedAt;
+
+    function track(name, data){
+      data = data || {};
+      data.visitor = visitor;
+      if (source) data.source = source;
+      data.ts = new Date().toISOString();
+      if (window.va) window.va('event', { name: name, data: data });
+      if (window.clarity) { try { window.clarity('event', name); window.clarity('set', 'visitor', visitor); } catch(e){} }
+      if (window.gtag) window.gtag('event', name, data);
+      try { console.log('[deck-track]', name, data); } catch(e){}
+    }
+    window.__track = track;
+
+    track('deck_opened', { referrer: document.referrer || 'direct', deck: 'winamp' });
+
+    function getActiveSlide(){
+      var s = document.querySelector('section[aria-current="true"], section.active, section.is-active');
+      if (s) return s.getAttribute('data-screen-label');
+      var m = (window.location.hash||'').match(/^#(\d+)/);
+      if (m) {
+        var idx = parseInt(m[1],10) - 1;
+        var all = document.querySelectorAll('section[data-screen-label]');
+        if (all[idx]) return all[idx].getAttribute('data-screen-label');
+      }
+      return null;
+    }
+
+    function checkSlide(){
+      var label = getActiveSlide();
+      if (label && label !== currentSlide) {
+        if (currentSlide) {
+          track('slide_exit', { slide: currentSlide, duration_s: Math.round((Date.now()-slideStartedAt)/1000), deck: 'winamp' });
+        }
+        currentSlide = label;
+        slideStartedAt = Date.now();
+        track('slide_view', { slide: label, deck: 'winamp' });
+      }
+    }
+
+    window.addEventListener('hashchange', checkSlide);
+    document.addEventListener('DOMContentLoaded', function(){
+      checkSlide();
+      var stage = document.querySelector('deck-stage');
+      if (stage) {
+        var mo = new MutationObserver(checkSlide);
+        mo.observe(stage, { attributes:true, subtree:true, attributeFilter:['aria-current','class'] });
+      }
+      setInterval(checkSlide, 2000);
+    });
+
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('a');
+      if (!a) return;
+      var href = a.href || '';
+      if (/meetings\.hubspot\.com/i.test(href)) {
+        track('cta_book_click', { href: href, slide: currentSlide });
+      } else if (/youtube\.com|youtu\.be/i.test(href)) {
+        track('cta_youtube_click', { href: href, slide: currentSlide });
+      } else if (href.indexOf('mailto:')===0) {
+        track('cta_contact_click', { email: href.replace('mailto:',''), slide: currentSlide });
+      } else if (href.indexOf('tel:')===0) {
+        track('cta_phone_click', { number: href.replace('tel:',''), slide: currentSlide });
+      } else if (/^https?:\/\//.test(href) && href.indexOf(location.host)<0) {
+        track('outbound_click', { href: href, slide: currentSlide });
+      }
+    });
+
+    window.addEventListener('beforeunload', function(){
+      if (currentSlide) {
+        track('slide_exit', { slide: currentSlide, duration_s: Math.round((Date.now()-slideStartedAt)/1000) });
+      }
+      track('deck_closed', {
+        total_s: Math.round((Date.now()-openedAt)/1000),
+        final_slide: currentSlide,
+        deck: 'winamp'
+      });
+    });
+  })();
+</script>
+
+<script src="deck-stage.js"></script>
+<style>
+  :root {
+    --slide-pad: 96px;
+    --shoe-claret: #2C1810;
+    --shoe-cream:  #F2E8DC;
+    --shoe-paper:  #F6F0E8;
+  }
+  html, body { margin:0; background:#0a0807; }
+  deck-stage { background:#0a0807; }
+  section {
+    width: 1920px; height: 1080px;
+    background: var(--shoe-paper);
+    color: var(--wrh-ink);
+    position: relative;
+    overflow: hidden;
+    font-family: var(--font-body);
+    box-sizing: border-box;
+  }
+  .ai { font-size: 0.34em; vertical-align: baseline; letter-spacing:-0.005em; font-weight: 900; }
+
+  /* shared chrome */
+  .slide-chrome {
+    position:absolute; top:48px; left:var(--slide-pad); right:var(--slide-pad);
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--fg-muted);
+  }
+  .slide-chrome.on-dark { color:rgba(242,232,220,0.6); }
+  .slide-chrome .lockup { display:flex; align-items:center; gap:12px; }
+  .slide-chrome .lockup img { width:28px; height:28px; border-radius:6px; }
+  .slide-chrome .lockup b {
+    font-family:var(--font-display); font-weight:800; letter-spacing:-0.01em;
+    color:inherit; text-transform:none; font-size:15px;
+  }
+  .slide-chrome .lockup b .ai { font-size: 0.62em; font-weight:800; }
+  .slide-footer {
+    position:absolute; bottom:36px; left:var(--slide-pad); right:var(--slide-pad);
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--fg-muted);
+  }
+  .slide-footer.on-dark { color:rgba(242,232,220,0.5); }
+  .overline {
+    font-family:var(--font-body); font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:var(--wrh-orange);
+  }
+  .overline.on-dark { color:var(--wrh-orange); }
+
+  section.dark   { background:#0a0807; color:var(--wrh-fur-soft); }
+  section.claret { background:var(--shoe-claret); color:var(--shoe-cream); }
+  section.cream  { background:var(--shoe-paper); }
+
+  /* === 01 COVER === */
+  .cover-grid { position:absolute; inset:0; display:grid; grid-template-columns: 1.05fr 1fr; }
+  .cover-left {
+    background: var(--wrh-ink); color: var(--wrh-fur-soft);
+    padding: 120px; display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .cover-right {
+    background-image: url('assets/shoe/cover-hero.jpg');
+    background-size: cover; background-position: center 40%; position: relative;
+    background-color: #1a1208;
+  }
+  .cover-right::after {
+    content:""; position:absolute; inset:0;
+    background: linear-gradient(90deg, rgba(10,8,7,0.5) 0%, rgba(10,8,7,0) 35%);
+  }
+  .cover-left .by { display:flex; align-items:center; gap:14px; font-family:var(--font-mono); font-size:13px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,220,198,0.7); }
+  .cover-left .by img { width:40px; height:40px; border-radius:8px; }
+  .cover-left h1 {
+    font-family:var(--font-editorial); font-weight:300; font-style: italic;
+    font-size:148px; letter-spacing:-0.025em; line-height:0.92;
+    margin:0; color:var(--wrh-fur-soft);
+  }
+  .cover-left .sub {
+    font-family:var(--font-body); font-weight:300; font-size:24px; line-height:1.4;
+    color:rgba(244,220,198,0.82); margin: 28px 0 0; max-width:34ch;
+  }
+  .cover-left .meta { display:flex; gap:60px; }
+  .cover-left .meta div { font-family:var(--font-mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(244,220,198,0.55); }
+  .cover-left .meta div b { display:block; color:var(--wrh-fur-soft); font-family:var(--font-body); font-weight:600; font-size:14px; letter-spacing:0.04em; margin-top:6px; text-transform:none; }
+
+  /* === 02 PAIN PILLARS === */
+  .pillars-slide {
+    position:absolute; inset:0; padding: 180px var(--slide-pad) 120px;
+    display:grid; grid-template-rows: auto 1fr; gap: 64px; align-content:center;
+  }
+  .pillars-slide h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:108px;
+    letter-spacing:-0.025em; line-height:0.95; margin:0; max-width:22ch;
+  }
+  .pillars-slide h2 em { font-style:italic; color:var(--wrh-orange); font-weight:300; }
+  .pillars-row { display:grid; grid-template-columns: repeat(3,1fr); gap:64px; align-content:center; }
+  .pillar-card { display:flex; flex-direction:column; gap:18px; }
+  .pillar-card .mark { width:48px; height:48px; }
+  .pillar-card .mark.bar  { background: var(--wrh-ink); width:6px; height:48px; }
+  .pillar-card .mark.dot  { background: var(--wrh-ink); border-radius:50%; }
+  .pillar-card .mark.sq   { background: var(--wrh-ink); }
+  .pillar-card h4 {
+    font-family:var(--font-editorial); font-weight:400; font-size:38px;
+    line-height:1.05; letter-spacing:-0.015em; margin:0; max-width:18ch;
+  }
+  .pillar-card p {
+    font-family:var(--font-body); font-size:17px; line-height:1.55;
+    color:var(--fg-muted); margin:0; max-width:36ch;
+  }
+
+  /* === SECTION HEADER (CLARET) === */
+  .section-header {
+    position:absolute; inset:0; display:grid; grid-template-rows: 1fr auto;
+    padding: 96px var(--slide-pad) 64px;
+  }
+  .section-header .word { align-self: center; line-height: 0.82; }
+  .section-header .word .one {
+    display:block; font-family: var(--font-editorial); font-weight:300; font-style: italic;
+    font-size: 340px; letter-spacing:-0.03em; margin-bottom: -30px;
+  }
+  .section-header .word .two {
+    display:block; font-family: var(--font-display); font-weight:900;
+    font-size: 280px; letter-spacing:-0.04em; text-transform:uppercase; line-height:0.9;
+  }
+  .section-header .word .three {
+    display:block; font-family: var(--font-editorial); font-weight:300; font-style: italic;
+    font-size: 220px; letter-spacing:-0.03em; margin-top: -10px;
+  }
+  .section-header .lockup { display:flex; align-items:center; justify-content:space-between; }
+  .section-header .lockup .label { font-family:var(--font-mono); font-size:13px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.75; }
+
+  /* === CONCEPT === */
+  .concept-grid { position:absolute; inset:0; display:grid; grid-template-columns: 1fr 1fr; }
+  .concept-left  { background:var(--shoe-paper); padding: 140px var(--slide-pad); display:flex; flex-direction:column; justify-content:center; gap:36px; }
+  .concept-right {
+    background-image:url('assets/shoe/concept-hero.jpg');
+    background-size:cover; background-position:center;
+    background-color: #1a1208;
+  }
+  .concept-left h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:108px;
+    letter-spacing:-0.03em; line-height:0.92; margin:0;
+  }
+  .concept-left h2 i { font-style:italic; }
+  .concept-left .lead { font-family:var(--font-body); font-size:21px; line-height:1.5; color:var(--wrh-ink-soft); max-width:44ch; }
+  .concept-left .tag-row { display:flex; gap:10px; flex-wrap:wrap; }
+  .concept-left .tag {
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.1em;
+    padding:8px 14px; background:rgba(16,10,7,0.06); border-radius:999px;
+    text-transform:uppercase; color:var(--wrh-ink);
+  }
+
+  /* === CREATIVE DIRECTION === */
+  .creative-dir {
+    position:absolute; inset:0; padding: 160px var(--slide-pad) 110px;
+    display:grid; grid-template-rows: 1fr auto; gap: 56px;
+  }
+  .creative-dir .hero {
+    width:100%; height:100%; background: var(--wrh-paper-pure);
+    border-radius: 8px; overflow:hidden; position:relative;
+    box-shadow:0 30px 60px -20px rgba(16,10,7,0.18);
+  }
+  .creative-dir .hero img { width:100%; height:100%; object-fit:cover; display:block; }
+  .creative-dir .copy { display:grid; grid-template-columns: 1.4fr 1fr; gap:80px; align-items:end; }
+  .creative-dir .copy h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:80px;
+    letter-spacing:-0.025em; line-height:1.0; margin:0;
+  }
+  .creative-dir .copy h2 em { font-style:italic; color:var(--wrh-orange); }
+  .creative-dir .copy p {
+    font-family:var(--font-body); font-size:17px; line-height:1.6;
+    color:var(--fg-muted); margin:0; max-width:48ch;
+  }
+
+  /* === STARTING POINT === */
+  .startpoint {
+    position:absolute; inset:0; padding: 160px var(--slide-pad) 110px;
+    display:grid; grid-template-columns: 1.05fr 0.95fr; gap:80px; align-items:center;
+  }
+  .startpoint .copy h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:108px;
+    letter-spacing:-0.03em; line-height:0.95; margin:0;
+  }
+  .startpoint .copy h2 i { font-style:italic; }
+  .startpoint .copy p {
+    font-family:var(--font-body); font-size:21px; line-height:1.55;
+    color:var(--wrh-ink-soft); margin: 28px 0 0; max-width:42ch;
+  }
+  .startpoint .frame {
+    position:relative; width:100%; aspect-ratio: 3/4; max-height: 700px;
+    background:#0a0807; border-radius:8px; overflow:hidden;
+    box-shadow:0 50px 100px -30px rgba(16,10,7,0.5);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .startpoint .frame img { width:100%; height:100%; object-fit:contain; display:block; }
+  .startpoint .frame .tag {
+    position:absolute; left:18px; top:18px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em;
+    text-transform:uppercase; color:rgba(244,220,198,0.85);
+    background:rgba(10,8,7,0.55); backdrop-filter:blur(8px);
+    padding:8px 12px; border-radius:6px;
+  }
+
+  /* === BEYOND STILLS === */
+  .beyond {
+    position:absolute; inset:0; padding: 150px var(--slide-pad) 100px;
+    display:grid; grid-template-rows: auto 1fr; gap: 56px;
+  }
+  .beyond .head { display:flex; align-items:flex-end; justify-content:space-between; gap:60px; }
+  .beyond .head h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:96px;
+    letter-spacing:-0.025em; line-height:0.95; margin:0;
+  }
+  .beyond .head h2 em { font-style:italic; color:var(--wrh-orange); }
+  .beyond .head p {
+    font-family:var(--font-body); font-size:17px; line-height:1.55;
+    color:var(--fg-muted); max-width:44ch; margin:0;
+  }
+  .beyond .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items:stretch; }
+  .beyond .card {
+    background:#0a0807; border-radius:10px; overflow:hidden;
+    display:flex; flex-direction:column;
+    box-shadow:0 30px 60px -20px rgba(16,10,7,0.25);
+  }
+  .beyond .card .pic {
+    width:100%; aspect-ratio: 16/9;
+    background-size: cover; background-position: center;
+    background-color: #1a1208;
+  }
+  .beyond .card .body { padding: 28px 32px 32px; color:var(--wrh-fur-soft); flex:1; display:flex; flex-direction:column; gap:14px; }
+  .beyond .card .lab { font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color: var(--wrh-orange); }
+  .beyond .card h4 { font-family:var(--font-editorial); font-weight:400; font-size:30px; letter-spacing:-0.015em; line-height:1.1; margin:0; }
+  .beyond .card p { font-family:var(--font-body); font-size:15px; line-height:1.55; color:rgba(244,220,198,0.75); margin:0; }
+
+  /* === SHOES IN THE WORLD === */
+  .world {
+    position:absolute; inset:0; padding: 150px var(--slide-pad) 100px;
+    display:grid; grid-template-rows: auto 1fr; gap: 48px;
+  }
+  .world .head { display:flex; align-items:flex-end; justify-content:space-between; gap:60px; }
+  .world .head h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:96px;
+    letter-spacing:-0.025em; line-height:0.95; margin:0;
+  }
+  .world .head h2 em { font-style:italic; color:var(--wrh-orange); }
+  .world .head p {
+    font-family:var(--font-body); font-size:17px; line-height:1.55;
+    color:var(--fg-muted); max-width:44ch; margin:0;
+  }
+  .world .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .world .frame {
+    background:#0a0807; border-radius:8px; overflow:hidden;
+    box-shadow:0 20px 40px -16px rgba(16,10,7,0.3);
+    display:flex; flex-direction:column;
+  }
+  .world .frame .pic {
+    width:100%; aspect-ratio: 3/4;
+    background-size:cover; background-position:center;
+    background-color: #1a1208;
+  }
+  .world .frame .cap {
+    padding: 14px 18px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em;
+    text-transform:uppercase; color: rgba(244,220,198,0.5);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .world .frame .cap b { color: rgba(244,220,198,0.85); font-weight:600; }
+
+  /* === ADAPTABILITY === */
+  .adapt {
+    position:absolute; inset:0; padding: 150px var(--slide-pad) 100px;
+    display:grid; grid-template-rows: auto auto 1fr; gap:32px; align-content:start;
+  }
+  .adapt h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:108px;
+    letter-spacing:-0.025em; line-height:0.95; margin:0; max-width:18ch;
+  }
+  .adapt h2 em { font-style:italic; color:var(--wrh-orange); }
+  .adapt .lead {
+    font-family:var(--font-body); font-size:19px; line-height:1.5;
+    color:var(--fg-muted); max-width:64ch; margin:0;
+  }
+  .adapt .shoes-frame {
+    width:100%; aspect-ratio: 16/4.5;
+    background: var(--wrh-paper-pure);
+    border-radius: 10px; overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(16,10,7,0.18);
+    position:relative; background-color: #1a1208;
+  }
+  .adapt .shoes-frame img,
+  .adapt .shoes-frame video {
+    width:100%; height:100%; object-fit: cover; display:block;
+  }
+  .adapt .features {
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:16px 32px;
+  }
+  .adapt .features div {
+    font-family:var(--font-body); font-size:14px; line-height:1.5; color:var(--wrh-ink-soft);
+    padding-left: 22px; position:relative;
+  }
+  .adapt .features div::before {
+    content:"+"; position:absolute; left:0; top:0;
+    color: var(--wrh-orange); font-family: var(--font-mono); font-weight:600;
+  }
+
+  /* === BRAIN / CASE STUDY === */
+  .brain-case {
+    position:absolute; inset:0; padding: 150px var(--slide-pad) 100px;
+    display:grid; grid-template-rows: auto 1fr; gap: 48px;
+  }
+  .brain-case .head { display:flex; align-items:flex-end; justify-content:space-between; gap:60px; }
+  .brain-case .head h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:96px;
+    letter-spacing:-0.025em; line-height:0.95; margin:0; color: var(--wrh-fur-soft);
+  }
+  .brain-case .head h2 em { font-style:italic; color:var(--wrh-orange); }
+  .brain-case .head p {
+    font-family:var(--font-body); font-size:17px; line-height:1.55;
+    color:rgba(244,220,198,0.65); max-width:44ch; margin:0;
+  }
+  .brain-case .stage { display:grid; grid-template-columns: 1.6fr 0.8fr; gap:36px; align-items:stretch; }
+  .brain-case .nodes, .brain-case .result {
+    background:#0e0e10; border-radius:10px; overflow:hidden;
+    box-shadow: 0 30px 60px -20px rgba(16,10,7,0.45);
+    position:relative;
+  }
+  .brain-case .nodes img, .brain-case .result img { width:100%; height:100%; object-fit:cover; display:block; }
+  .brain-case .tag {
+    position:absolute; left:18px; top:18px; z-index:2;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em;
+    text-transform:uppercase; color:rgba(244,220,198,0.9);
+    background:rgba(10,8,7,0.5); backdrop-filter:blur(8px);
+    padding:8px 12px; border-radius:6px;
+  }
+  .brain-case .arrow {
+    position:absolute; right:-36px; top:50%; transform:translateY(-50%); z-index:5;
+    font-family:var(--font-mono); font-size:60px; color: var(--wrh-orange);
+    text-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+
+  /* === ASSET FLOW === */
+  .flow {
+    position:absolute; inset:0; padding: 150px var(--slide-pad) 100px;
+    display:grid; grid-template-rows: auto 1fr; gap: 60px; align-content: start;
+  }
+  .flow .head { display:flex; align-items:flex-end; justify-content:space-between; gap:60px; }
+  .flow .head h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:96px;
+    letter-spacing:-0.025em; line-height:0.95; margin:0;
+  }
+  .flow .head h2 em { font-style:italic; color:var(--wrh-orange); }
+  .flow .head p {
+    font-family:var(--font-body); font-size:17px; line-height:1.55;
+    color:var(--fg-muted); max-width:48ch; margin:0;
+  }
+  .flow .pipeline {
+    display:grid; grid-template-columns: 1.1fr 24px 1fr 24px 1fr;
+    gap:0 20px; align-items:center;
+  }
+  .flow .arrow-cell {
+    height:2px; background: linear-gradient(90deg, var(--wrh-orange), transparent);
+    position:relative;
+  }
+  .flow .arrow-cell::after {
+    content:""; position:absolute; right:0; top:50%; transform:translateY(-50%);
+    border-left:10px solid var(--wrh-orange); border-top:6px solid transparent; border-bottom:6px solid transparent;
+  }
+  .flow .stage {
+    background: var(--wrh-paper-pure); border: 1px solid rgba(16,10,7,0.10);
+    border-radius: 12px; padding: 28px; display:flex; flex-direction:column; gap: 18px;
+    min-height: 380px;
+  }
+  .flow .stage.brain { background: var(--wrh-ink); color: var(--wrh-fur-soft); border-color: transparent; }
+  .flow .stage .icon {
+    width:64px; height:64px; border-radius: 8px;
+    display:flex; align-items:center; justify-content:center;
+    background:#1a1a1a; color: var(--wrh-fur-soft);
+  }
+  .flow .stage.brain .icon { background:#000; }
+  .flow .stage .icon svg { width:32px; height:32px; }
+  .flow .stage .label {
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em;
+    text-transform:uppercase; color: var(--wrh-orange);
+  }
+  .flow .stage h4 {
+    font-family:var(--font-editorial); font-weight:400; font-size:32px;
+    line-height:1.05; letter-spacing:-0.015em; margin:0;
+  }
+  .flow .stage.brain h4 { color: var(--wrh-fur-soft); }
+  .flow .stage .one-time { font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color: rgba(244,220,198,0.6); }
+  .flow .stage ul {
+    list-style:none; padding:0; margin:0; display:grid; gap:8px;
+    font-family:var(--font-body); font-size:15px; line-height:1.45; color: var(--wrh-ink);
+  }
+  .flow .stage.brain ul { color: rgba(244,220,198,0.85); }
+  .flow .stage li::before { content:"·  "; color: var(--wrh-orange); }
+
+  /* === LOOK / PRODUCT GRIDS === */
+  .look {
+    position:absolute; inset:0; padding: 140px var(--slide-pad) 100px;
+    display:grid; grid-template-rows: auto 1fr; gap: 48px;
+  }
+  .look .head { display:flex; align-items:flex-end; justify-content:space-between; gap:60px; }
+  .look .head h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:88px;
+    letter-spacing:-0.025em; line-height:0.95; margin:0;
+  }
+  .look .head h2 em { font-style:italic; color:var(--wrh-orange); }
+  .look .head .meta {
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.18em;
+    text-transform:uppercase; color: var(--wrh-orange);
+  }
+  .look .head .meta b { display:block; color:var(--wrh-ink); font-family:var(--font-body); font-size:15px; letter-spacing:0.02em; margin-top:8px; text-transform:none; font-weight:600; }
+  .look .grid { display:grid; gap:18px; }
+  .look .grid.cat-grid { grid-template-columns: repeat(4, 1fr); }
+  .look .grid.cam-grid { grid-template-columns: repeat(3, 1fr); }
+  .look .frame {
+    background: var(--wrh-paper-pure); border-radius: 6px; overflow:hidden;
+    box-shadow: 0 18px 40px -16px rgba(16,10,7,0.18); display:flex; flex-direction:column;
+  }
+  .look .frame .pic {
+    width:100%; aspect-ratio: 3/4;
+    background-size:cover; background-position:center;
+    background-color: #f0ece6;
+  }
+  .look .frame.wide .pic { aspect-ratio: 4/3; }
+  .look .frame .cap {
+    padding: 14px 18px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em;
+    text-transform:uppercase; color: var(--fg-muted);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .look .frame .cap b { color: var(--wrh-ink); font-weight:600; }
+
+  /* === SPEED PILLARS === */
+  /* reuses .pillars-slide */
+
+  /* === TEAM === */
+  .bio {
+    position:absolute; inset:0; padding: 130px var(--slide-pad) 90px;
+    display:grid; grid-template-rows: auto auto auto; gap: 28px;
+  }
+  .bio-heading { display:flex; align-items:flex-end; justify-content:space-between; gap: 40px; }
+  .bio-heading h2 {
+    font-family: var(--font-editorial); font-weight:300; font-size: 76px;
+    letter-spacing: -0.025em; line-height: 0.95; margin: 0;
+  }
+  .bio-heading h2 em { font-style: italic; color: var(--wrh-orange); }
+  .bio-heading p {
+    font-family: var(--font-body); font-size: 16px; line-height: 1.55;
+    color: var(--fg-muted); max-width: 50ch; margin: 0;
+  }
+  .team-row { display:grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .team-card {
+    border-radius: 12px; padding: 36px;
+    display:grid; grid-template-columns: 1fr; gap: 18px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 30px 70px -20px rgba(16,10,7,0.28);
+  }
+  .team-card.claret { background: var(--shoe-claret); color: var(--shoe-cream); }
+  .team-card.ink    { background: var(--wrh-ink); color: var(--wrh-fur-soft); }
+  .team-card::after {
+    content:""; position:absolute; right:-100px; bottom:-100px;
+    width: 260px; height:260px; border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, rgba(242,232,220,0.12), transparent 65%);
+    pointer-events: none;
+  }
+  .team-card.ink::after {
+    background: radial-gradient(circle at 30% 30%, rgba(230,83,11,0.30), transparent 65%);
+  }
+  .team-card .role {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: rgba(242,232,220,0.7); position:relative; z-index:1;
+  }
+  .team-card.ink .role { color: rgba(244,220,198,0.7); }
+  .team-card .name {
+    font-family: var(--font-display); font-weight: 800; font-size: 42px;
+    letter-spacing: -0.02em; text-transform: uppercase; margin: 0; line-height: 1;
+    position:relative; z-index:1;
+  }
+  .team-card .copy {
+    font-family: var(--font-body); font-size: 15px; line-height: 1.55;
+    color: rgba(242,232,220,0.82); margin: 0; max-width: 56ch;
+    position:relative; z-index:1;
+  }
+  .team-card.ink .copy { color: rgba(244,220,198,0.82); }
+  .team-card .phone {
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.12em;
+    color: rgba(242,232,220,0.7); padding-top: 6px; position:relative; z-index:1;
+  }
+  .team-card.ink .phone { color: rgba(244,220,198,0.7); }
+  .team-card .linkedin {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: 0.06em; text-decoration: none;
+    color: rgba(244,220,198,0.55);
+    margin-top: 4px; position: relative; z-index: 1;
+    transition: color 160ms ease;
+  }
+  .team-card .linkedin:hover { color: var(--wrh-orange); }
+  .team-card .linkedin svg { display:block; opacity: 0.85; }
+  .clients .clients-label {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--fg-muted); margin-bottom: 14px;
+  }
+  .clients-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 1px; background: rgba(16,10,7,0.10);
+    border: 1px solid rgba(16,10,7,0.10);
+  }
+  .client-logo {
+    background: var(--wrh-paper-pure); height: 76px;
+    display:flex; align-items:center; justify-content:center;
+    padding: 8px 10px; color: var(--wrh-ink); overflow: hidden;
+  }
+  .lg-abinbev { font-family: var(--font-display); font-weight: 700; font-size: 10px; letter-spacing: 0.04em; color: #0A1A2F; text-transform: none; line-height: 1.1; text-align:center; }
+  .lg-abinbev b { display:block; font-weight: 900; font-size: 16px; letter-spacing:-0.01em; margin-top: 2px; }
+  .lg-havas { font-family: var(--font-display); font-weight: 900; font-size: 22px; letter-spacing: 0.02em; color: #E2231A; text-transform: uppercase; line-height: 1; }
+  .lg-bazaar { font-family: "Cormorant Garamond", serif; font-weight: 700; font-size: 22px; letter-spacing: 0.04em; color: #000; text-transform: uppercase; font-style: italic; line-height: 1; }
+  .lg-ms { font-family: var(--font-display); font-weight: 900; font-size: 26px; letter-spacing: -0.02em; color: #1A1A1A; text-transform: none; line-height: 1; }
+  .lg-ms span { color: #BFBAB3; font-weight: 700; }
+  .lg-triumph { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 18px; letter-spacing: 0.04em; color: #1A1A1A; text-transform: uppercase; line-height: 1; text-align:center; }
+  .lg-triumph span { display:block; font-size: 7px; letter-spacing: 0.22em; margin-top:4px; color:#5B4F47; font-weight:600; }
+  .lg-peugeot { font-family: var(--font-display); font-weight: 800; font-size: 14px; letter-spacing: 0.14em; color: #1A1A1A; text-transform: uppercase; text-align:center; line-height: 1; }
+  .lg-proximus { font-family: var(--font-display); font-weight: 800; font-size: 18px; letter-spacing: 0.02em; color: #5C2A8A; text-transform: lowercase; line-height: 1; }
+
+  /* === CLOSING === */
+  .closing {
+    position:absolute; inset:0; padding: 120px;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .closing-headline { display: flex; align-items: flex-end; gap: 40px; flex-wrap: nowrap; }
+  .closing h2 {
+    font-family:var(--font-editorial); font-weight:300; font-size:180px;
+    letter-spacing:-0.025em; line-height:0.92; margin:0; color:var(--wrh-fur-soft);
+  }
+  .closing h2 em { font-style: italic; color: var(--wrh-orange); font-weight:300; }
+  .closing .arrow-inline { display: inline-flex; align-items: flex-end; margin-bottom: 24px; }
+  .closing .arrow-inline img { width: 220px; height: 220px; display:block; }
+  .closing .contact-row {
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:60px;
+    align-items: flex-start; padding-top: 40px;
+    border-top: 1px solid rgba(244,220,198,0.15);
+  }
+  .closing .contact { font-family:var(--font-body); font-size:17px; line-height:1.55; color:rgba(244,220,198,0.78); }
+  .closing .contact .label {
+    font-family: var(--font-mono); font-size:11px; letter-spacing:0.18em;
+    text-transform:uppercase; color: var(--wrh-orange);
+    margin-bottom: 14px; display:block;
+  }
+  .closing .contact b {
+    color:var(--wrh-fur-soft); font-weight:700; font-family: var(--font-body);
+    font-size: 22px; display:block; margin-bottom: 6px;
+  }
+  .closing .contact .role {
+    color: rgba(244,220,198,0.55); font-size: 13px;
+    font-family: var(--font-mono); letter-spacing: 0.12em; text-transform:uppercase; margin-bottom: 10px;
+  }
+  .closing .contact a { color: rgba(244,220,198,0.78); text-decoration: none; word-break: break-word; }
+
+  /* Video fills in card/frame containers */
+  .beyond .card .pic video,
+  .brain-case .nodes video,
+  .cover-right video,
+  .concept-right video,
+  .creative-dir .hero video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .beyond .card .pic { position: relative; overflow: hidden; }
+  .brain-case .nodes { overflow: hidden; }
+  .cover-right { overflow: hidden; }
+  .concept-right { overflow: hidden; }
+
+  /* Placeholder style for missing images */
+  .img-ph {
+    width:100%; height:100%;
+    background: #1a1208;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em;
+    text-transform:uppercase; color:rgba(244,220,198,0.2);
+    text-align:center; padding:20px; box-sizing:border-box;
+  }
+</style>
+</head>
+<body>
+<script type="application/json" id="speaker-notes">
+[
+  "Apertura. The Art of Style in Motion. La stessa intelligenza creativa che applichiamo alla moda, adattata al mondo delle scarpe.",
+  "La realtà del mercato. Tre problemi che ogni shoe brand conosce bene: costi di produzione proibitivi, zero flessibilità creativa dopo lo shooting, incoerenza visiva tra stagioni e canali.",
+  "Capitolo I. Cinematic Style AI. Come trasformiamo un singolo prodotto in una campagna completa.",
+  "Il concetto. Da una sola foto di scarpa, generiamo un ecosistema di contenuti: catalogo, lifestyle, campagna, social. La scarpa è il punto di partenza, non il risultato finale.",
+  "La direzione creativa guida la tecnologia. Non siamo solo tecnici AI: siamo art director, brand thinker, visual storyteller. L'AI è il nostro strumento di produzione ad alta velocità.",
+  "Il punto di partenza. Tutto inizia da una singola foto di prodotto. Anche un semplice packshot su sfondo bianco. Quello che viene dopo è il lavoro nostro.",
+  "Oltre il catalogo. Dallo stesso source: viste a 360° per l'e-commerce e video cinématici per i social. Senza shooting aggiuntivi.",
+  "La scarpa nel mondo. Piazziamo le scarpe in ambienti ricchi e atmosferici — strade, parchi, interni, stagioni — con una direzione artistica coerente. La scarpa diventa protagonista di una storia.",
+  "Adattabilità infinita. Stesso modello, ogni colore, ogni stagione, ogni mercato. Pronto per Shopify, WooCommerce e shop custom.",
+  "Capitolo II. Il cervello creativo. Come funziona il sistema.",
+  "Costruiamo il cervello creativo per la collezione. Una volta configurato, il sistema produce all'infinito senza perdere coerenza: brand DNA, stile fotografico, ambienti, mood — tutto codificato.",
+  "Asset creation flow. Setup unico per stagione: il sistema AI codifica brand e stile. Da lì: asset di catalogo in velocità di pubblicazione, e campagna sugli stessi ambienti e mood.",
+  "Look 1 — Catalogo. Quattro viste di prodotto dallo stesso sistema: frontale, laterale, dettaglio suola, dettaglio tomaia. Tutto generato, pronto per e-commerce.",
+  "Look 1 — Campagna. La stessa scarpa in contesti lifestyle ricchi. Location invernale, location urbana, location naturale. Coerenza assoluta tra catalogo e campagna.",
+  "Velocità senza compromesso. Tre pilastri: consegna rapida, scalabilità accessibile, identità coerente.",
+  "Chi c'è dietro. Peter Client Director, Alberto Maccari Creative Director. Venticinque anni di campagne internazionali.",
+  "Chiusura. Where creative thinking meets high-speed production."
+]
+</script>
+
+<deck-stage thumbnail-rail="false">
+
+  <!-- 01 — COVER -->
+  <section class="dark" data-screen-label="01 Cover">
+    <div class="cover-grid">
+      <div class="cover-left">
+        <div class="by">
+          <img src="assets/wrh-app-icon.png" alt="WRH" />
+          A White Rabbit Hole<span class="ai" style="font-size:0.9em;">.ai</span> proposition
+        </div>
+        <h1>The Art of<br/>Style in <i>Motion.</i></h1>
+        <p class="sub">AI creativity for lifestyle brands — from a single product photo to a full campaign ecosystem.</p>
+        <div class="meta">
+          <div>Studio<b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+          <div>For<b>Lifestyle brands · Retail · D2C</b></div>
+          <div>Date<b>2026</b></div>
+        </div>
+      </div>
+      <div class="cover-right">
+        <video src="assets/shoe/social.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 — PAIN -->
+  <section data-screen-label="02 The reality">
+    <div class="slide-chrome">
+      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+      <div>02 · The reality</div>
+    </div>
+    <div class="pillars-slide">
+      <h2>The reality of<br/>lifestyle brand<br/><em>content production.</em></h2>
+      <div class="pillars-row">
+        <div class="pillar-card">
+          <div class="mark bar"></div>
+          <h4>High production costs &amp; rigid timelines</h4>
+          <p>Models, locations, lighting, stylists, post-production — one shooting day costs a fortune and locks the creative for an entire season. There is almost no room to react.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="mark dot"></div>
+          <h4>One source, one look</h4>
+          <p>A traditional shoot produces a fixed set of images. If the product needs to look different on social vs. OOH vs. e-commerce, you shoot again. That budget rarely exists.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="mark sq"></div>
+          <h4>Visual inconsistency across channels</h4>
+          <p>Different photographers, different seasons, different briefs. Maintaining a coherent brand aesthetic across catalogue, social and campaign is genuinely hard — and expensive.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>White Rabbit Hole.ai · The Art of Style in Motion</div>
+      <div>02 / 17</div>
+    </div>
+  </section>
+
+  <!-- 03 — SECTION HEADER -->
+  <section class="claret" data-screen-label="03 Chapter · Cinematic Style AI">
+    <div class="slide-chrome on-dark" style="color:rgba(242,232,220,0.7);">
+      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+      <div>Chapter I · Cinematic Style AI</div>
+    </div>
+    <div class="section-header">
+      <div class="word">
+        <span class="one">Cinematic</span>
+        <span class="two">Style</span>
+        <span class="three">by A.I.</span>
+      </div>
+      <div class="lockup">
+        <div class="label">for lifestyle brands · 2026</div>
+        <div class="label">Pilot programme</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 — CONCEPT -->
+  <section data-screen-label="04 Concept">
+    <div class="slide-chrome">
+      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+      <div>04 · Concept</div>
+    </div>
+    <div class="concept-grid">
+      <div class="concept-left">
+        <div class="overline">The concept</div>
+        <h2>Turn one product<br/>into a full<br/><i>campaign world.</i></h2>
+        <p class="lead">From a single product photo, we build a complete visual ecosystem — catalogue, lifestyle, campaign, social, OOH. The shoe is the starting point. The brand story is what we build on top.</p>
+        <div class="tag-row">
+          <div class="tag">Editorial</div>
+          <div class="tag">Cinematic</div>
+          <div class="tag">AI directed by craft</div>
+          <div class="tag">E-commerce · Social · OOH</div>
+        </div>
+      </div>
+      <div class="concept-right">
+        <video src="assets/shoe/brain.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>White Rabbit Hole.ai · The Art of Style in Motion</div>
+      <div>04 / 17</div>
+    </div>
+  </section>
+
+  <!-- 05 — CREATIVE DIRECTION -->
+  <section data-screen-label="05 Creative direction">
+    <div class="slide-chrome">
+      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+      <div>05 · Creative direction</div>
+    </div>
+    <div class="creative-dir">
+      <div class="hero">
+        <video src="assets/shoe/flow.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="copy">
+        <div>
+          <div class="overline" style="margin-bottom:14px;">Creative direction drives the technology</div>
+          <h2>Human eye,<br/>at <em>production speed.</em></h2>
+        </div>
+        <p>We are not just AI operators. We are brand thinkers, art directors and visual storytellers. The technology produces at speed — the human creative direction is the compass. Brand identity and narrative always lead. The AI follows.</p>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>White Rabbit Hole.ai · The Art of Style in Motion</div>
+      <div>05 / 17</div>
+    </div>
+  </section>
+
+  <!-- 06 — STARTING POINT -->
+  <section data-screen-label="06 Starting point">
+    <div class="slide-chrome">
+      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+      <div>06 · Starting point</div>
+    </div>
+    <div class="startpoint">
+      <div class="copy">
+        <div class="overline" style="margin-bottom:18px;">The starting point</div>
+        <h2>It all starts from<br/>a single, simple<br/><i>product photo.</i></h2>
+        <p>No elaborate set. No stylist. No location. Just one clean product shot — the kind every lifestyle brand already has by the thousands. Everything that follows is built on top of that.</p>
+      </div>
+      <div class="frame" style="background:#f0ece6;">
+        <div class="tag">Source · Torfs · packshot</div>
+        <img src="assets/shoe/torfs-product.jpg" alt="Torfs shoe" style="width:100%;height:100%;object-fit:contain;display:block;" />
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>White Rabbit Hole.ai · The Art of Style in Motion</div>
+      <div>06 / 17</div>
+    </div>
+  </section>
+
+  <!-- 07 — BEYOND STILLS -->
+  <section data-screen-label="07 Beyond stills">
+    <div class="slide-chrome">
+      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+      <div>07 · Beyond stills</div>
+    </div>
+    <div class="beyond">
+      <div class="head">
+        <h2>Beyond the<br/><em>product shot.</em></h2>
+        <p>From the same static photo, we generate animated 360° product views and multi-angle presentations — ready for immediate e-commerce deployment, without a single extra shoot.</p>
+      </div>
+      <div class="grid" style="grid-template-columns: 1fr;">
+        <div class="card" style="flex-direction:row; aspect-ratio:16/6;">
+          <div class="pic" style="flex:1; aspect-ratio:auto;">
+            <video src="assets/shoe/shoe-rotation.mp4" autoplay muted loop playsinline></video>
+          </div>
+          <div class="body" style="flex:0 0 460px; justify-content:center;">
+            <div class="lab">E-commerce immersion</div>
+            <h4>Animated product views — from a still photo.</h4>
+            <p>From a single static image we generate 360° rotations, multi-angle views and product animations — ready for immediate deployment on your storefront. Generated, not shot.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>White Rabbit Hole.ai · The Art of Style in Motion</div>
+      <div>07 / 11</div>
+    </div>
+  </section>
+
+  <!-- 08 — SOCIAL AUTOMATION -->
+  <section data-screen-label="08 Social &amp; Automation">
+    <div class="slide-chrome">
+      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+      <div>08 · Social &amp; automation</div>
+    </div>
+    <div class="concept-grid">
+      <div class="concept-left">
+        <div class="overline">Versatility &amp; social automation</div>
+        <h2>Every format.<br/>Every channel.<br/><i>Automatically.</i></h2>
+        <p class="lead">From one source asset, we generate the full social content stack — Reels, Stories, feed posts, carousel, OOH. Every format adapted, every touchpoint covered. Consistently on brand, week after week.</p>
+        <div class="tag-row">
+          <div class="tag">Instagram · TikTok</div>
+          <div class="tag">Stories 9:16</div>
+          <div class="tag">Feed 1:1 · 4:5</div>
+          <div class="tag">Reels · OOH</div>
+        </div>
+      </div>
+      <div class="concept-right">
+        <video src="assets/shoe/outfit-3.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>White Rabbit Hole.ai · The Art of Style in Motion</div>
+      <div>08 / 11</div>
+    </div>
+  </section>
+
+  <!-- 09 — SPEED PILLARS -->
+  <section data-screen-label="09 Speed">
+    <div class="slide-chrome">
+      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+      <div>09 · The result</div>
+    </div>
+    <div class="pillars-slide">
+      <h2>Uncompromising speed<br/>meets affordable<br/><em>scalability.</em></h2>
+      <div class="pillars-row">
+        <div class="pillar-card">
+          <div class="mark bar"></div>
+          <h4>Rapid delivery</h4>
+          <p>Turn a full seasonal collection into campaign-ready content in days, not weeks or months. Speed without compromise on creative quality.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="mark dot"></div>
+          <h4>Affordable scalability</h4>
+          <p>Grow your visual library and populate every channel without exponentially increasing your production costs. One system, every output.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="mark sq"></div>
+          <h4>Consistent identity</h4>
+          <p>Maintain the exact same aesthetic and brand DNA across different models, colorways, seasons and markets. No drift, no inconsistency.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>White Rabbit Hole.ai · The Art of Style in Motion</div>
+      <div>09 / 11</div>
+    </div>
+  </section>
+
+  <!-- 16 — TEAM + CLIENTS -->
+  <section data-screen-label="10 Team">
+    <div class="slide-chrome">
+      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+      <div>10 · Who's behind it</div>
+    </div>
+    <div class="bio">
+      <div class="bio-heading">
+        <h2>25 years of<br/><em>experience.</em> One craft.</h2>
+        <p>Editorial taste applied to mass market brands. Campaigns that look like magazines and sell like retail. Now applied to lifestyle brands.</p>
+      </div>
+      <div class="team-row">
+        <div class="team-card claret">
+          <div class="role">Client manager</div>
+          <h3 class="name">Peter</h3>
+          <p class="copy">Client lead. Single point of contact from brief to delivery. Keeps every project on rails: scope, milestones, suppliers, files. Weekly check-ins until the last asset is signed off.</p>
+          <div class="phone">+32 02 646 31 90</div>
+        </div>
+        <div class="team-card ink">
+          <div class="role">Strategy &amp; creative director</div>
+          <h3 class="name">Alberto<br/>Maccari</h3>
+          <p class="copy">Italian art director and photographer, based in Bruxelles. From TBWA, Havas and JWT in Milano, London and Düsseldorf, to head of creation at Isobar Dentsu, to founder of White Rabbit. Editorial craft applied at commercial scale.</p>
+          <div class="phone">+32 (0)470 841 722</div>
+          <a class="linkedin" href="https://www.linkedin.com/in/albertomaccari/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V9h3v10zM6.5 7.7A1.7 1.7 0 116.5 4a1.7 1.7 0 010 3.7zM19 19h-3v-5.3c0-1.4-.5-2.3-1.7-2.3-1 0-1.5.7-1.8 1.3-.1.2-.1.5-.1.8V19h-3V9h3v1.3c.4-.6 1.2-1.5 2.8-1.5 2 0 3.8 1.3 3.8 4.2V19z"/></svg>
+            linkedin.com/in/albertomaccari
+          </a>
+        </div>
+      </div>
+      <div class="clients">
+        <div class="clients-label">Selected clients · 25 years</div>
+        <div class="clients-grid">
+          <div class="client-logo"><div class="lg-abinbev">ANHEUSER-BUSCH<b>InBev</b></div></div>
+          <div class="client-logo"><div class="lg-havas">Havas</div></div>
+          <div class="client-logo"><div class="lg-bazaar">Bazaar</div></div>
+          <div class="client-logo"><div class="lg-ms">M<span>&amp;</span>S</div></div>
+          <div class="client-logo"><div class="lg-triumph">Triumph<span>shaping women · 1886</span></div></div>
+          <div class="client-logo"><div class="lg-peugeot">Peugeot</div></div>
+          <div class="client-logo"><div class="lg-proximus">proximus</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>White Rabbit Hole.ai · The Art of Style in Motion</div>
+      <div>10 / 11</div>
+    </div>
+  </section>
+
+  <!-- 17 — CLOSING -->
+  <section class="dark" data-screen-label="11 Closing">
+    <div class="slide-chrome on-dark">
+      <div class="lockup"><img src="assets/wrh-app-icon.png" /><b>White Rabbit Hole<span class="ai">.ai</span></b></div>
+      <div>11 · End</div>
+    </div>
+    <div class="closing">
+      <div class="closing-headline">
+        <h2>Where craft<br/>meets <em>high speed.</em></h2>
+      </div>
+      <!-- Arrow: absolute, above Studio column, 440px -->
+      <img src="assets/wrh-arrow-down.gif" alt=""
+           style="position:absolute; right:120px; bottom:230px; width:440px; height:440px; display:block; pointer-events:none;" />
+      <div class="contact-row">
+        <div class="contact">
+          <span class="label">Client manager</span>
+          <b>Peter</b>
+          <div class="role">Single point of contact</div>
+          +32 02 646 31 90
+        </div>
+        <div class="contact">
+          <span class="label">Strategy &amp; creative director</span>
+          <b>Alberto Maccari</b>
+          <div class="role">Creative direction</div>
+          +32 (0)470 841 722
+        </div>
+        <div class="contact">
+          <span class="label">Studio</span>
+          <b>White Rabbit Hole<span style="font-size:0.62em;vertical-align:baseline;font-weight:700;">.ai</span></b>
+          <div class="role">Bruxelles</div>
+          <a href="https://whiterabbithole.ai">whiterabbithole.ai</a><br/>
+          <a href="mailto:hello@whiterabbithole.ai">hello@whiterabbithole.ai</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+</body>
+</html>
